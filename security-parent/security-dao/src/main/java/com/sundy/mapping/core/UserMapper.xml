@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sundy.dao.core.UserMapper">
+  <resultMap id="BaseResultMap" type="com.sundy.core.User">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="ACCOUNTNONEXPIRED" jdbcType="BIT" property="accountNonExpired" />
+    <result column="ACCOUNTNONLOCKED" jdbcType="BIT" property="accountNonLocked" />
+    <result column="CREDENTIALSNONEXPIRED" jdbcType="BIT" property="credentialsNonExpired" />
+    <result column="ENABLED" jdbcType="BIT" property="enabled" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, USERNAME, PASSWORD, GENDER, ACCOUNTNONEXPIRED, ACCOUNTNONLOCKED, CREDENTIALSNONEXPIRED, 
+    ENABLED
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sundy.core.User">
+    insert into user (ID, NAME, USERNAME, 
+      PASSWORD, GENDER, ACCOUNTNONEXPIRED, 
+      ACCOUNTNONLOCKED, CREDENTIALSNONEXPIRED, ENABLED
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{accountnonexpired,jdbcType=BIT}, 
+      #{accountnonlocked,jdbcType=BIT}, #{credentialsnonexpired,jdbcType=BIT}, #{enabled,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sundy.core.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="gender != null">
+        GENDER,
+      </if>
+      <if test="accountnonexpired != null">
+        ACCOUNTNONEXPIRED,
+      </if>
+      <if test="accountnonlocked != null">
+        ACCOUNTNONLOCKED,
+      </if>
+      <if test="credentialsnonexpired != null">
+        CREDENTIALSNONEXPIRED,
+      </if>
+      <if test="enabled != null">
+        ENABLED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="accountnonexpired != null">
+        #{accountnonexpired,jdbcType=BIT},
+      </if>
+      <if test="accountnonlocked != null">
+        #{accountnonlocked,jdbcType=BIT},
+      </if>
+      <if test="credentialsnonexpired != null">
+        #{credentialsnonexpired,jdbcType=BIT},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sundy.core.User">
+    update user
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="accountnonexpired != null">
+        ACCOUNTNONEXPIRED = #{accountnonexpired,jdbcType=BIT},
+      </if>
+      <if test="accountnonlocked != null">
+        ACCOUNTNONLOCKED = #{accountnonlocked,jdbcType=BIT},
+      </if>
+      <if test="credentialsnonexpired != null">
+        CREDENTIALSNONEXPIRED = #{credentialsnonexpired,jdbcType=BIT},
+      </if>
+      <if test="enabled != null">
+        ENABLED = #{enabled,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sundy.core.User">
+    update user
+    set NAME = #{name,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      ACCOUNTNONEXPIRED = #{accountnonexpired,jdbcType=BIT},
+      ACCOUNTNONLOCKED = #{accountnonlocked,jdbcType=BIT},
+      CREDENTIALSNONEXPIRED = #{credentialsnonexpired,jdbcType=BIT},
+      ENABLED = #{enabled,jdbcType=BIT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
