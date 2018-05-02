@@ -13,7 +13,12 @@ public class LoginController {
 	
 	@RequestMapping("/")
 	public String login(Model model) {
-		return "login";
+		return "index";
+	}
+	
+	@RequestMapping("/index")
+	public String index(Model model) {
+		return "index";
 	}
 	
 	
