@@ -7,23 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class LoginController {
+@RequestMapping("/employee")
+public class EmployeeController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	
-	@RequestMapping("/")
-	public String login(Model model) {
-		return "index";
+	@RequestMapping("/employeeList")
+	public String employeeDataList(Model model) {
+		
+		return "employee/employeeList";
 	}
-	
-	@RequestMapping("/index")
-	public String index(Model model) {
-		return "index";
-	}
-	
-	@RequestMapping("/home")
-	public String home(Model model) {
-		return "home";
-	}
-	
 }
