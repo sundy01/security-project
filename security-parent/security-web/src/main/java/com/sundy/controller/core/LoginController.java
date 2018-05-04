@@ -17,8 +17,8 @@ public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping("/login")
-	public String login(Model model) {
-	/*	logger.debug(" HomeController => /login");
+	public String login(HttpServletRequest request,Map<String,String> map) {
+		logger.debug(" HomeController => /login");
 		String exception = request.getParameter("shiroLoginFailure");
 		logger.debug("exception=" + exception);
         String msg = "";
@@ -38,7 +38,7 @@ public class LoginController {
             }
         }
         
-        map.put("msg", msg);*/
+        map.put("msg", msg);
         
         // 此方法不处理登录成功,由shiro进行处理
         return "/login";
