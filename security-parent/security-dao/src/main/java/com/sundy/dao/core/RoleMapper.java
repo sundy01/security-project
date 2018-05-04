@@ -1,5 +1,7 @@
 package com.sundy.dao.core;
 
+import java.util.List;
+
 import com.sundy.core.Role;
 
 public interface RoleMapper {
@@ -14,5 +16,9 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+    
+    public List<Role> findRoleByUserName(String userName);
+    
+    public List<Role> findRoleByMenuId(Integer menuId);
     
 }

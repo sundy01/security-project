@@ -6,6 +6,7 @@ public class RoleResource {
     private Integer roleid;
 
     private Integer menuid;
+    
 
     public Integer getId() {
         return id;

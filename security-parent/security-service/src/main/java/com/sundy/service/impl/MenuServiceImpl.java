@@ -35,4 +35,12 @@ public class MenuServiceImpl implements IMenuService {
 		return menuList;
 	}
 
+	public List<Menu> findMenuByUserName(String username) {
+		return this.menuMapper.findMenuByUserName(username);
+	}
+
+	public List<Menu> findAllMenu() {
+		return this.menuMapper.findAllMenu();
+	}
+
 }

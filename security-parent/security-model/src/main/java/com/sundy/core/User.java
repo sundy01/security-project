@@ -1,6 +1,7 @@
 package com.sundy.core;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +24,36 @@ public class User implements UserDetails{
     
     private Collection<GrantedAuthority> authorities;
     
+    private List<Menu> userMenuList;
+    private List<Role> role;
+    
     
 
+
+
+	public List<Menu> getUserMenuList() {
+		return userMenuList;
+	}
+
+
+	public void setUserMenuList(List<Menu> userMenuList) {
+		this.userMenuList = userMenuList;
+	}
+
+
+	public List<Role> getRole() {
+		return role;
+	}
+
+
+	public void setRole(List<Role> role) {
+		this.role = role;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 
 	public Integer getId() {

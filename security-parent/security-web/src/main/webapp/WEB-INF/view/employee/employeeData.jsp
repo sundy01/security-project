@@ -13,8 +13,7 @@
 <title>员工列表</title>
 </head>
 <body>
-
-	<div class="panel-body" style="padding-bottom:0px;">
+<div class="panel-body" style="padding-bottom:0px;">
   <div class="panel panel-default">
    <div class="panel-heading">查询条件</div>
    <div class="panel-body">
@@ -90,6 +89,7 @@ $(function () {
   strictSearch: true,
   minimumCountColumns: 2,    //最少允许的列数
   uniqueId: "Id", 
+  toolbar: '#toolbar',    //工具按钮用哪个容器
   height:400,
   selectItemName: 'parentItem',
   columns: [{

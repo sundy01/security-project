@@ -15,6 +15,41 @@
     from role
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  
+   <select id="findRoleByMenuId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		SELECT
+		    c.ID,
+		    c.ROLEID,
+		    c.MENUID
+		FROM
+		    role a
+		LEFT JOIN
+		   role_resource c
+		ON
+		    c.ROLEID=a.ID
+		WHERE
+		    c.MENUID=#{menuId}
+   </select>
+  
+  <select id="findRoleByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		 SELECT
+		    a.ID,
+		    a.ROLENAME,
+		    a.ROLEDESC
+		FROM
+		    role a
+		LEFT JOIN
+		    role_member b
+		ON
+		    a.ID=b.ROLEID
+		LEFT JOIN
+		    USER c
+		ON
+		    c.ID=b.MEMBERID
+		WHERE
+		    c.USERNAME=#{userName}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from role
     where ID = #{id,jdbcType=INTEGER}

@@ -19,11 +19,44 @@
     where ID = #{id,jdbcType=INTEGER}
   </select>
   
+   <select id="findAllMenu"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from resource
+    where 1=1
+  </select>
+  
    <select id="loadMenuByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from resource
     where PARENTID = #{parentId}
+  </select>
+  
+   <select id="findRoleByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+			 SELECT
+			    a.ID,
+			    a.TEXT,
+			    a.STATE,
+			    a.URL,
+			    a.PARENTID,
+			    a.LEAF
+			FROM
+			    RESOURCE a
+			LEFT JOIN
+			    role_resource b
+			ON
+			    a.ID=b.MENUID
+			LEFT JOIN
+			    role_member c
+			ON
+			    c.ROLEID=b.ROLEID
+			LEFT JOIN
+			    USER d
+			ON
+			    d.ID=c.MEMBERID
+			WHERE
+			    d.USERNAME=#{userName}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
