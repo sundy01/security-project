@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("userMember")
 public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
