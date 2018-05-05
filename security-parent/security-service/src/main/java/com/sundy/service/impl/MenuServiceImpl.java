@@ -2,6 +2,8 @@ package com.sundy.service.impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +13,7 @@ import com.sundy.service.inter.IMenuService;
 
 @Component
 public class MenuServiceImpl implements IMenuService {
-	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private MenuMapper menuMapper;
 
@@ -41,6 +43,11 @@ public class MenuServiceImpl implements IMenuService {
 
 	public List<Menu> findAllMenu() {
 		return this.menuMapper.findAllMenu();
+	}
+
+	@Override
+	public Menu getMenuById(Integer menuId) {
+		return this.menuMapper.selectByPrimaryKey(menuId);
 	}
 
 }

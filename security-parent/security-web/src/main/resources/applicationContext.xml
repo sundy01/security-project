@@ -64,5 +64,6 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
-    <import resource="spring-shiro.xml"/>
+    <import resource="applicationContext-securityBean.xml"/>
+    <import resource="applicationContext-securityConfig.xml"/>
 </beans>

@@ -42,7 +42,7 @@ background-color: #ccc;
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
 						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="${ctx}/logout">退出</a></li>
 				</ul>
 			</li>
 				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -70,7 +70,7 @@ background-color: #ccc;
 			<dt><i class="Hui-iconfont">&#xe613;</i>&nbsp;员工维护<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					 <li><a data-href="${ctx}/employee/employeeList" data-title="员工列表" href="javascript:void(0)">员工列表</a></li>
+					 <li><a data-href="${ctx}/employee/employeeList.page" data-title="员工列表" href="javascript:void(0)">员工列表</a></li>
 			    </ul>
 		</dd>
 	</dl>

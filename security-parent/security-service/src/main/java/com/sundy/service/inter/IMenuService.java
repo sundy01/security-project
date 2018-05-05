@@ -11,5 +11,7 @@ public interface IMenuService {
 	public List<Menu> findAllMenu();
 	
 	public List<Menu> findMenuByUserName(String username);
+	
+	public Menu getMenuById(Integer menuId);
 
 }

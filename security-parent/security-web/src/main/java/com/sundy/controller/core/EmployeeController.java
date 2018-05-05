@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class EmployeeController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@RequestMapping("/employeeList")
+	@RequestMapping("/employeeList.page")
 	public String employeeDataList(Model model) {
 		
 		return "employee/employeeData";

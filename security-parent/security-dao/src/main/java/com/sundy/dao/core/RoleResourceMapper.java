@@ -1,5 +1,7 @@
 package com.sundy.dao.core;
 
+import java.util.List;
+
 import com.sundy.core.RoleResource;
 
 public interface RoleResourceMapper {
@@ -14,4 +16,6 @@ public interface RoleResourceMapper {
     int updateByPrimaryKeySelective(RoleResource record);
 
     int updateByPrimaryKey(RoleResource record);
+    
+    public List<RoleResource> findAllRoleResource();
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/security
+         http://www.springframework.org/schema/security/spring-security.xsd" >
+    
+         <!-- 不要过滤图片等静态资源 -->
+		<http pattern="/**/*.jpg" security="none" />
+		<http pattern="/**/*.png" security="none" />
+		<http pattern="/**/*.gif" security="none" />
+		<http pattern="/**/*.css" security="none" />
+		<http pattern="/**/*.js"  security="none" />
+		<http pattern="/**/*.ttf"  security="none" />
+	    <http pattern="/**/*.woff"  security="none" />
+		
+		<!-- 登录页面和忘记密码页面不过滤  -->
+		<http pattern="/excelfile" security="none" />
+		<http pattern="/login.page" security="none" />
+		<http pattern="/expired.page" security="none"/>
+		<http pattern="/accessDenied.page" security="none"/>
+		<http pattern="/loginLimit.page" security="none"/>
+		<http pattern="/failure.page" security="none"/>
+		
+<http entry-point-ref="loginUrlAuthenticationEntryPoint" disable-url-rewriting="true">
+	    <session-management session-authentication-strategy-ref="concurrentSessionControlStrategy"></session-management>
+	    <anonymous/>
+		<access-denied-handler error-page="/accessDenied.page"/>
+		<custom-filter ref="formLogoutFilter" position="LOGOUT_FILTER"/>
+		<custom-filter ref="rememberMeAuthenticationFilter" position="REMEMBER_ME_FILTER"/>
+		<csrf disabled="true" />
+	    <custom-filter ref="formLoginAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+	    <custom-filter ref="concurrentSessionFilter"  position="CONCURRENT_SESSION_FILTER"/>
+	    <custom-filter ref="securityContextPersistenceFilter"  before="SECURITY_CONTEXT_FILTER"/>
+		<custom-filter ref="customerFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+	</http>
+	
+	<!-- 配置认证管理器 -->
+<authentication-manager alias="authenticationManager">
+<authentication-provider ref="daoAuthenticationProvider"/>
+<authentication-provider ref="rememberMeAuthenticationProvider"/>
+</authentication-manager>
+<!-- 配置rememberMeAuthenticationFilter -->
+<beans:bean id="rememberMeAuthenticationFilter" class="com.sundy.service.security.inteceptor.RememberMeCookieAuthenticationFilter">
+	<beans:constructor-arg name="rememberMeServices" ref="rememberMeService"/>
+	<beans:constructor-arg name="authenticationManager" ref="authenticationManager"/>
+</beans:bean>
+
+
+</beans:beans>

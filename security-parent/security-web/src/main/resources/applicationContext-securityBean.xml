@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+   http://www.springframework.org/schema/aop 
+   http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+   http://www.springframework.org/schema/tx
+   http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+   http://www.springframework.org/schema/jee
+   http://www.springframework.org/schema/jee/spring-jee-4.1.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+
+  <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter"/>
+  
+  <!-- 配置决策管理器 -->
+  <bean id="accessDecisionManager" class="com.sundy.service.security.inteceptor.MyAccessDecisionManager">
+		  <constructor-arg name="decisionVoters">
+		                   <list>
+						<ref bean="roleVoter"/>
+					 </list>
+		  </constructor-arg>
+  </bean>
+  
+  <!-- 配置所需资源包括用户角色,角色资源等 -->
+ <bean id="urlSecurityMetadataSourceService" class="com.sundy.service.security.inteceptor.MySecurityMetadataSourceService"/>
+ <bean id="userDetailService" class="com.sundy.service.security.inteceptor.MyUserDetailsService"/>
+
+ 
+ <!-- 配置登录入口 -->
+ <bean id="loginUrlAuthenticationEntryPoint" class="com.sundy.service.security.inteceptor.CustomerLoginUrlAuthenticationEntryPoint">
+     <constructor-arg name="loginFormUrl" value="/login.page"/>
+ </bean>
+ 
+ <!-- 配置登录成功后的认证处理器 -->
+ <bean id="authenticationSuccessHandler" class="com.sundy.service.security.inteceptor.UrlLoginSuccessHandler">
+ <property name="defaultTargetUrl" value="/manager.page"></property>
+ <property name="alwaysUseDefaultTargetUrl" value="true"></property>
+ </bean>
+ 
+ <!-- 配置登录失败后的认证处理器 -->
+ <bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+ <property name="defaultFailureUrl" value="/failure.page"></property>
+ <property name="useForward" value="true"></property>
+ </bean>
+ 
+ <!-- 配置登出成功后的处理器 -->
+ <bean id="logoutSuccessHandler" class="com.sundy.service.security.inteceptor.UrlLogoutSuccessHandler">
+ <property name="defaultTargetUrl" value="/accessDenied.page"/>
+  <property name="alwaysUseDefaultTargetUrl" value="true"></property>
+ </bean>
+ 
+ <!-- 配置登出Filter -->
+ <bean id="formLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<constructor-arg name="logoutSuccessHandler" index="0" ref="logoutSuccessHandler"/>
+		<constructor-arg name="handlers" index="1">
+			<list>
+				<ref bean="rememberMeService"/>
+				<bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler">
+					<property name="invalidateHttpSession" value="true"></property>
+				</bean>
+			</list>
+		</constructor-arg>
+</bean>
+ 
+  <!-- 配置自定义的FilterSecurityInterceptor -->
+  <bean id="customerFilterSecurityInterceptor" class="com.sundy.service.security.inteceptor.MyCustomFilterSecurityInterceptor">
+       <property name="authenticationManager" 
+			ref="authenticationManager"/>
+		<property name="accessDecisionManager" 
+			ref="accessDecisionManager"/>
+		<property name="securityMetadataSource" 
+			ref="urlSecurityMetadataSourceService"/>
+ </bean>
+ 
+ 
+ <!-- 配置登录Filter -->
+<bean id="formLoginAuthenticationFilter" class="com.sundy.service.security.inteceptor.FormLoginAuthenticationFilter">
+<property name="authenticationManager" ref="authenticationManager" />
+ <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+  <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+  <property name="rememberMeServices" ref="rememberMeService"></property>
+        <property name="sessionAuthenticationStrategy" ref="concurrentSessionControlStrategy" />
+        <property name="sessionRegistry" ref="sessionRegistry" />
+		<property name="loginUsersLimitUrl" value="/loginLimit.page"/> 
+		<property name="maximumUsers" value="1" /><!-- -1表示无限制 -->    
+</bean>
+
+<!-- 配置登录认证提供者 -->
+<bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+<property name="userDetailsService" ref="userDetailService"/>
+</bean>
+ 
+ <!-- 配置 rememberMeService-->
+<bean id="rememberMeService" class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+        <constructor-arg name="key" value="SundyAppRememberMeKey"/>
+        <constructor-arg name="userDetailsService" ref="userDetailService"/>
+		<!-- tokenValiditySeconds mean is the rememberMe cookie's expiry date,it default value is 6048000 seconds,seven days -->
+		<property name="tokenValiditySeconds">
+			<value>6048000</value>
+		</property>
+		
+		<!-- The default rememberMe function field name is '_spring_security_remember_me',you can modify it by way -->
+		<property name="parameter">
+			<value>remember_me_</value>
+		</property>
+		
+		<!-- The default cookie name is 'SPRING_SECURITY_REMEMBER_ME_COOKIE',you can modify it by way -->
+		<property name="cookieName">
+			<value>sundy_app_rememberme_cookie</value>
+		</property>
+	</bean>
+	
+<!-- 配置rememberMeAuthenticationProvider 认证提供者-->
+<bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+    <constructor-arg name="key" value="SundyAppRememberMeKey"/>
+</bean>
+
+
+ <!-- 配置sessionFilter -->
+<bean id="concurrentSessionFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+           <constructor-arg name="sessionRegistry" ref="sessionRegistry"/>
+		<!-- <property name="sessionRegistry" ref="sessionRegistry" />
+		<property name="expiredUrl" value="/expired.page" /> -->
+</bean>
+
+<!-- 配置 sessionRegistry-->
+<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+<!-- 配置sessionAuthenticationStrategy -->
+<bean id="concurrentSessionControlStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+		<constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+		<property name="maximumSessions" value="-1" />
+</bean>
+
+<!-- 配置 securityContextPersistenceFilter-->
+<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+       <constructor-arg name="repo" ref="securityContextRepository"/>
+</bean>
+<bean name="securityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>
+</beans>
