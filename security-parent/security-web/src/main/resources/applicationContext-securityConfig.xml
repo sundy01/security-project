@@ -25,13 +25,14 @@
 		<http pattern="/failure.page" security="none"/>
 		
 <http entry-point-ref="loginUrlAuthenticationEntryPoint" disable-url-rewriting="true">
-	    <session-management session-authentication-strategy-ref="concurrentSessionControlStrategy"></session-management>
+	    <session-management session-authentication-strategy-ref="concurrentSessionControlAuthenticationStrategy"/>
 	    <anonymous/>
 		<access-denied-handler error-page="/accessDenied.page"/>
 		<custom-filter ref="formLogoutFilter" position="LOGOUT_FILTER"/>
 		<custom-filter ref="rememberMeAuthenticationFilter" position="REMEMBER_ME_FILTER"/>
 		<csrf disabled="true" />
-	    <custom-filter ref="formLoginAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+		<custom-filter ref="usernamePasswordAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+	    <!-- <custom-filter ref="formLoginAuthenticationFilter" position="FORM_LOGIN_FILTER"/> -->
 	    <custom-filter ref="concurrentSessionFilter"  position="CONCURRENT_SESSION_FILTER"/>
 	    <custom-filter ref="securityContextPersistenceFilter"  before="SECURITY_CONTEXT_FILTER"/>
 		<custom-filter ref="customerFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>

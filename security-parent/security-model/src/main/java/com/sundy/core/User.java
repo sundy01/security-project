@@ -21,14 +21,24 @@ public class User implements UserDetails{
     private  boolean accountNonLocked; //账号是否锁定
     private  boolean credentialsNonExpired;
     private  boolean enabled;
-    
     private Collection<GrantedAuthority> authorities;
-    
     private List<Menu> userMenuList;
     private List<Role> role;
     
     
-
+    @Override  
+    public boolean equals(Object obj) {  
+        if (obj instanceof User && this.hashCode() == obj.hashCode()) {  
+            return true;  
+        } else {  
+            return false;  
+        }  
+    }  
+      
+    @Override  
+    public int hashCode() {  
+        return this.username.hashCode() + this.password.hashCode();  
+    }
 
 
 	public List<Menu> getUserMenuList() {

@@ -50,10 +50,10 @@ public class FormLoginAuthenticationFilter extends
 			throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
 		}
 	
-		if (maximumUsers != -1 && sessionRegistry.getAllPrincipals().size() >= maximumUsers) {
+		/*if (maximumUsers != -1 && sessionRegistry.getAllPrincipals().size() >= maximumUsers) {
 			redirectStrategy.sendRedirect(request, response, loginUsersLimitUrl);
 			return null;
-		}
+		}*/
 		
 		String username = request.getParameter(usernameParameter);
 		String password = request.getParameter(passwordParameter);
