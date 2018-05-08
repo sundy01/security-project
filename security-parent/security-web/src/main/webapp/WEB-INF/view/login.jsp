@@ -42,7 +42,7 @@
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <label for="online">
-            <input type="checkbox" name="rememberMe" id="rememberMe" value="true" checked="checked">
+            <input type="checkbox" name="rememberMe" id="rememberMe" value="true">
             使我保持登录状态</label>
         </div>
       </div>

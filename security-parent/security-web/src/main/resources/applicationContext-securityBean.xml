@@ -105,7 +105,7 @@
  <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">    
     <constructor-arg ref="sessionRegistry"/>    
  </bean> 
- <bean id="concurrentSessionControlAuthenticationStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">    
+ <bean id="concurrentSessionControlAuthenticationStrategy" class="com.sundy.service.security.inteceptor.CustomerConcurrentSessionControlAuthenticationStrategy">    
                 <constructor-arg ref="sessionRegistry"/>    
                 <property name="maximumSessions" value="1"></property> <!-- 同一个用户最多允许好多少个session -->    
         <!-- exceptionIfMaximumExceeded, 当超过最大session数时:  
@@ -172,9 +172,11 @@
     <bean id="redirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy">
         <property name="contextRelative" value="false"/>
     </bean>
+    
+    <bean id="sessionRegistry" class="com.sundy.service.security.inteceptor.CustomerSessionRegistryImpl" />
 
 <!-- 配置 sessionRegistry-->
-<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+<!-- <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" /> -->
 
 <!-- 配置 securityContextPersistenceFilter-->
 <bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
